@@ -3,16 +3,15 @@ void LimitSwitch(){
     buttonState[a] = digitalRead(SwitchArray[a]);
 
     if (buttonState[a] == HIGH) {
-      Serial.print("Pintu ");
-      Serial.print(a+1);
-      Serial.println(" tertutup");
-//      digitalWrite(ledPin, HIGH);
+//      Serial.print("Pintu ");
+//      Serial.print(a+1);
+//      Serial.println(" tertutup");
     } else {
-      Serial.print("Pintu ");
-      Serial.print(a+1);
-      Serial.println(" terbuka");
+//      Serial.print("Pintu ");
+//      Serial.print(a+1);
+//      Serial.println(" terbuka");
       pathJsonResponse(idBoxArray[a]);
-//      digitalWrite(ledPin, LOW);
+      doorArraySerial[a] = 0;
     }
   }
 }

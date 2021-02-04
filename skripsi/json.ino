@@ -5,13 +5,19 @@ void getJson(String JSONMessage){
     String code = doc[0]["CodeLocker"];
 //    Serial.println("Locker " + code);
     for(int a = 0; a < doc.size();a++){
-      int idbox = doc[a]["id"];
+//      int idbox = doc[a]["id"];
       idBoxArray[a] = doc[a]["id"];
-      int nobox = doc[a]["NoBox"];
+//      int nobox = doc[a]["NoBox"];
       noBoxArray[a] = doc[a]["NoBox"];
-      bool door = doc[a]["IsOpen"];
+//      bool door = doc[a]["IsOpen"];
       doorArray[a] = doc[a]["IsOpen"];
-      Serial.println(String(idbox)+" - " + String(nobox) + " - " + String(door));
+      String password = doc[a]["Password"];
+      PasswordArray[a] = password;
+      isRentArray[a] = doc[a]["IsRent"];
+      TimeOutArray[a] = doc[a]["TimeOut"];
+
+      Serial.println(String(noBoxArray[a]) + "-" + String(PasswordArray[a]) + "-" + String(isRentArray[a]) + "-" + String(TimeOutArray[a]));
+//      Serial.println(String(idbox)+" - " + String(nobox) + " - " + String(door) + " - " + String(password));
     }
     BukaPintu();
 }
@@ -27,7 +33,7 @@ void getJsonResponse(){
   //        Serial.println(httpCode);
   //        Serial.println(payload);
         getJson(payload);
-        LimitSwitch();
+//        LimitSwitch(); // nanti di balikan lagi
       }
   
     else {
@@ -39,11 +45,11 @@ void getJsonResponse(){
 
 void BukaPintu(){
   for(int a = 0; a < 2;a++){
-    if(doorArray[a] == 1){
+    if(doorArray[a] == 1 || doorArraySerial[a] == 1){
       digitalWrite(PintuArray[a], HIGH);
 //      Serial.println("Pintu " + String(noBoxArray[a]) + " Terbuka");
     }
-    else if(doorArray[a] == 0){
+    else if(doorArray[a] == 0 || doorArraySerial[a] == 0){
     digitalWrite(PintuArray[a], LOW);
 //    Serial.println("Pintu " + String(noBoxArray[a]) + " Tertutup");
     }
